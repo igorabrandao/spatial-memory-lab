@@ -1,13 +1,20 @@
 # 2026-05-11
 
 Problem:
-e.g. drift acumulando na orientação IMU.
+- Defining the project's initial structure and linking with CMakeLists.txt files.
 
 Hypothesis:
-e.g. falta fusão com acelerômetro.
+- An engine that renders image from an external device at least need the modules defined
+as folders inside the `src` folder.
 
 Testing:
-e.g. complementary filter.
+- Separating the modules responsibilities based key tasks such as:
+  - Providing the types;
+  - Handling the network/communication;
+  - Calculations, image rendering etc.
 
 Results:
-e.g. reduziu drift em ~40%.
+- As a result we find out the initial scaffolding for the platform.
+- We splitted the platform based on its internal engines (`src` folder), the applications that will validate them (`apps` folder) and third-party libraries that will be needed in the future
+(`libs` folder).
+- Also we did experimentation with ways of compiling and running the project with a `build.sh` and `makefile`, the latter demonstrated a better degree of flexibility and control over the build process.

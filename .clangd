@@ -1,0 +1,4 @@
+# Point clangd at the CMake-generated compilation database (requires: cmake -B build).
+# Fixes editor diagnostics like "'core/core.h' file not found" when the real build is fine.
+CompileFlags:
+  CompilationDatabase: build

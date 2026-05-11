@@ -1,0 +1,164 @@
+# --- Build / CMake ---
+build/
+build-*/
+cmake-build-*/
+out/
+cmake_install.cmake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# --- Compiled artifacts ---
+*.o
+*.obj
+*.lo
+*.slo
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+*.ipa
+*.dSYM/
+*.su
+*.idb
+*.pdb
+*.ilk
+*.exp
+
+# --- Precompiled headers ---
+*.gch
+*.pch
+
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# --- Linux ---
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# --- Windows ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- IDEs / editors ---
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.swp
+*.swo
+*~
+.project
+.cproject
+.settings/
+*.code-workspace
+
+# --- Xcode ---
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+*.xcworkspace/*
+!*.xcworkspace/contents.xcworkspacedata
+xcuserdata/
+DerivedData/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+
+# --- Visual Studio ---
+.vs/
+*.vcxproj.user
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# --- Dependency / package managers ---
+vcpkg_installed/
+.conan/
+conanbuildinfo.*
+conaninfo.txt
+graph_info.json
+
+# --- Android / Gradle (sensor app, etc.) ---
+**/local.properties
+**/.gradle/
+**/captures/
+**/build/
+**/intermediates/
+**/*.apk
+**/*.aab
+**/*.ap_
+**/*.dex
+**/*.class
+**/release/
+**/debug/
+.cxx/
+.externalNativeBuild/
+*.jks
+*.keystore
+
+# --- Python (scripts, generators, notebooks) ---
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# --- Testing / coverage ---
+Testing/Temporary/
+CTestTestfile.cmake
+*.gcov
+*.gcda
+*.gcno
+coverage/
+*.profraw
+*.profdata
+
+# --- Logs & temp ---
+*.log
+*.tmp
+*.temp
+*.cache
+.cache/
+
+# --- Runtime / local config (do not commit secrets) ---
+*.local
+secrets/
+.env.local
+
+# --- Assets / dumps (uncomment if you store large captures in-repo) ---
+# *.ply
+# *.pcd
+# *.bag
+
+# --- Dear ImGui / runtime UI state ---
+imgui.ini

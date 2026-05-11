@@ -1,0 +1,35 @@
+---
+description: Git workflow, self-review, and PR expectations for Spatial Memory Lab
+alwaysApply: true
+---
+
+# Review and workflow
+
+## Git
+
+- Work on a **feature branch**; keep commits **small** and scoped to one idea when possible.
+- Commit messages: **imperative mood**, short subject; body only when context is non-obvious.
+
+## Before opening a PR (self-review)
+
+1. **Build**: clean configure + build passes locally.
+2. **Behavior**: milestone or sub-milestone is **demonstrable** (e.g. window opens, cube draws, UDP stat updates).
+3. **Noise**: no accidental build artifacts, secrets, or huge generated files.
+4. **Docs**: if a design or protocol changed, update `docs/ENGINE_NOTES.md` (or roadmap note) in the same PR when reasonable.
+
+## PR description
+
+- State **what** changed and **why** (learning goal or bugfix), in **complete sentences**.
+- Add **evidence**: screenshot, short screen recording, or sample log output for visual/runtime work.
+
+## AI-assisted review
+
+When the user asks for review:
+
+- Call out **correctness**, **threading**, **coordinate conventions**, and **resource lifetime** for GL/network code.
+- Suggest **specific manual tests** (e.g. rotate device, disconnect UDP, resize window) rather than vague “test more.”
+- Do not rewrite the whole PR; propose **surgical** edits and explain each.
+
+## Red flags to mention
+
+- Unbounded queues, blocking the render thread on I/O, missing shader compile logs, undefined behavior in parsers.

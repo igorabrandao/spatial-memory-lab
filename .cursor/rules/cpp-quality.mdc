@@ -1,0 +1,38 @@
+---
+description: C/C++ style, structure, and quality bar for Spatial Memory Lab
+globs:
+  - "**/*.c"
+  - "**/*.cc"
+  - "**/*.cpp"
+  - "**/*.cxx"
+  - "**/*.h"
+  - "**/*.hpp"
+alwaysApply: false
+---
+
+# C++ quality and style
+
+Follow `CONTRIBUTING.md` and keep modules aligned with `PROJECT_STRUCTURE.md` (`core/`, `math/`, `renderer/`, etc.).
+
+## Naming
+
+- **Functions**: `snake_case`
+- **Classes / structs**: `PascalCase`
+- **Constants**: `k_snake_case` or `SCREAMING_SNAKE` — stay consistent within a file.
+
+## Design
+
+- **One concern per translation unit** where practical; avoid “god” `main.cpp` beyond early bootstrap.
+- **Explicit ownership**: prefer clear lifetimes; document non-obvious raw pointers.
+- **No silent failure**: OpenGL / shader / socket errors should log or surface in debug UI.
+- **Portability**: note macOS OpenGL constraints and any `#ifdef` blocks with a one-line comment why.
+
+## What to avoid
+
+- Large pasted or auto-generated blocks without the learner understanding them.
+- “Magic” math or GPU state changes without a comment or reference to coordinate spaces (model / world / view / clip).
+
+## Before finishing a change
+
+- Builds clean with the project’s standard flags.
+- New behavior is **observable** (visual change, log line, or ImGui field).

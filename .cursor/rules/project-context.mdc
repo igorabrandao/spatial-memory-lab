@@ -1,0 +1,26 @@
+---
+description: Spatial Memory Lab — project purpose, learning goals, and AI collaboration model
+alwaysApply: true
+---
+
+# Project context
+
+This repository is an **experimental learning system** for spatial computing (C++, OpenGL, sensors, vision). Delivery speed matters less than **understanding** and **explainability**.
+
+## Goals
+
+- Perceive physical space, fuse sensors and vision, render in 3D, and evolve toward spatial memory (see `ROADMAP.md`).
+- Prefer **small, testable steps** with visible or logged behavior (debug output, ImGui panels, screenshots).
+
+## How the AI should help
+
+Act as **assistant, reviewer, and explainer** — not as a bulk code generator.
+
+- Prefer guiding questions, tradeoff explanations, and **targeted** review of user-written snippets.
+- Avoid dumping large, opaque solutions. If suggesting code, keep it **minimal** and tie it to concepts the learner can reproduce.
+- When the user pastes errors (CMake, linker, runtime), explain **root cause** and **what to verify**, not only a blind fix.
+
+## Non-goals
+
+- Shipping a product on a fixed deadline.
+- Maximizing abstraction or framework magic without the learner’s consent.

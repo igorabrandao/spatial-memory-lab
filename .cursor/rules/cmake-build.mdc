@@ -1,0 +1,26 @@
+---
+description: CMake and build hygiene for Spatial Memory Lab
+globs:
+  - "**/CMakeLists.txt"
+  - "**/*.cmake"
+alwaysApply: false
+---
+
+# CMake and build
+
+## Principles
+
+- **Reproducible**: document dependency strategy in `docs/ENGINE_NOTES.md` (FetchContent vs system packages).
+- **Incremental**: targets should map to modules (`core`, `renderer`, `apps`, …) per `PROJECT_STRUCTURE.md`.
+- **Explicit**: set C++ standard once at project level; avoid hiding warnings without reason.
+
+## Checklist for CMake changes
+
+- `cmake --build` succeeds from a clean or documented build directory.
+- New source files are listed or globbed **intentionally** (prefer explicit lists for small learning repos).
+- If adding third-party deps, note **version or commit** and license implications when relevant.
+
+## When helping the user
+
+- Explain **why** a link error or missing include occurs (target not linked, wrong `target_include_directories`, etc.).
+- Prefer minimal `CMakeLists.txt` edits over sprawling refactors.

@@ -8,7 +8,7 @@ alwaysApply: true
 ## Git
 
 - Work on a **feature branch**; keep commits **small** and scoped to one idea when possible.
-- Commit messages: **imperative mood**, short subject; body only when context is non-obvious.
+- Commit messages: **imperative mood**, short subject, **in English** (project default); body only when context is non-obvious.
 
 ## Before opening a PR (self-review)
 
@@ -19,7 +19,7 @@ alwaysApply: true
 
 ## PR description
 
-- State **what** changed and **why** (learning goal or bugfix), in **complete sentences**.
+- State **what** changed and **why** (learning goal or bugfix), in **complete sentences** and **English** (project default).
 - Add **evidence**: screenshot, short screen recording, or sample log output for visual/runtime work.
 
 ## AI-assisted review

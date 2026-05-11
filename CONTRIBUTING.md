@@ -1,5 +1,9 @@
 # Contributing Guidelines
 
+## Language
+
+**English is the default project language** for source comments, documentation (`README`, `docs/`, `ROADMAP`), build scripts (`Makefile`, `CMakeLists.txt` comments where used), commit messages, and PR descriptions. That keeps the codebase consistent and reviewable for collaborators and tooling.
+
 ## Philosophy
 
 This project is an experimental learning system.

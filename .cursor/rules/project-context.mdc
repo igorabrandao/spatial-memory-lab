@@ -7,6 +7,10 @@ alwaysApply: true
 
 This repository is an **experimental learning system** for spatial computing (C++, OpenGL, sensors, vision). Delivery speed matters less than **understanding** and **explainability**.
 
+## Language
+
+**Default language is English** for code comments, docs, Make/CMake comments, commit messages, and PR text unless the user explicitly asks for another language for a specific artifact. Keep terminology and naming consistent with the rest of the repo.
+
 ## Goals
 
 - Perceive physical space, fuse sensors and vision, render in 3D, and evolve toward spatial memory (see `ROADMAP.md`).

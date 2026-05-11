@@ -1,0 +1,8 @@
+add_subdirectory(core)
+add_subdirectory(math)
+add_subdirectory(networking)
+add_subdirectory(renderer)
+add_subdirectory(sensors)
+add_subdirectory(spatial)
+add_subdirectory(ui)
+add_subdirectory(vision)

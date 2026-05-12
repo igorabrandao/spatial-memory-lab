@@ -27,8 +27,12 @@ CMAKE_GENERATOR  ?=
 # Compile parallelism (--parallel with no value uses available cores).
 JOBS             ?=
 
-# Main executable path (mirrors apps/desktop_app under the build directory).
-DESKTOP_APP_BIN  := $(BUILD_DIR)/apps/desktop_app/desktop_app
+# Which app under apps/ to run. Override on the command line:
+#   make run APP=other_app
+APP              ?= desktop_app
+
+# Executable path inferred from APP (apps/<APP>/<APP> under the build directory).
+APP_BIN          := $(BUILD_DIR)/apps/$(APP)/$(APP)
 
 # Base cmake command (extra flags: make configure CMAKE_FLAGS="-DFOO=ON")
 CMAKE            ?= cmake
@@ -47,12 +51,13 @@ help:
 	@echo "  make configure   Run CMake (-S . -B $(BUILD_DIR))"
 	@echo "  make build       Compile (configures automatically if build/ is missing)"
 	@echo "  make all         Same as: configure + build"
-	@echo "  make run         Build and run desktop_app"
+	@echo "  make run         Build and run \$$(APP) (default: $(APP))"
 	@echo "  make clean       Remove build artifacts (keeps CMake cache)"
 	@echo "  make distclean   Delete the entire $(BUILD_DIR) directory"
 	@echo "  make rebuild     clean + build"
 	@echo ""
-	@echo "Variables (e.g. make build CMAKE_BUILD_TYPE=Release JOBS=8):"
+	@echo "Variables (e.g. make run APP=desktop_app CMAKE_BUILD_TYPE=Release JOBS=8):"
+	@echo "  APP=$(APP) — which app under apps/ to run"
 	@echo "  BUILD_DIR=$(BUILD_DIR)"
 	@echo "  CMAKE_BUILD_TYPE=$(CMAKE_BUILD_TYPE)"
 	@echo "  CMAKE_GENERATOR=<empty or Ninja, Xcode, etc.>"
@@ -104,8 +109,10 @@ distclean:
 rebuild: clean build
 
 # -----------------------------------------------------------------------------
-# run — build and run the desktop app (binary path for this repo layout)
+# run — build and run apps/$(APP)/$(APP)
+#   make run                 # runs the default app ($(APP))
+#   make run APP=other_app   # runs apps/other_app/other_app
 # -----------------------------------------------------------------------------
 run: build
-	@test -f $(DESKTOP_APP_BIN) || { echo "Binary not found: $(DESKTOP_APP_BIN)"; exit 1; }
-	@$(DESKTOP_APP_BIN)
+	@test -f $(APP_BIN) || { echo "Binary not found: $(APP_BIN) (is APP=$(APP) correct?)"; exit 1; }
+	@$(APP_BIN)

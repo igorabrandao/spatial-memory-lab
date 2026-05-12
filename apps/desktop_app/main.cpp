@@ -18,7 +18,7 @@ int main() {
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
   // Create window
-  GLFWwindow* window =
+  GLFWwindow *window =
       glfwCreateWindow(800, 600, "Spatial Memory Lab", nullptr, nullptr);
 
   if (!window) {

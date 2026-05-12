@@ -30,6 +30,9 @@ int main() {
   // Make context current
   glfwMakeContextCurrent(window);
 
+  // Enable vsync
+  glfwSwapInterval(1);
+
   // Set viewport
   glViewport(0, 0, 800, 600);
 

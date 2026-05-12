@@ -4,6 +4,7 @@
 #include <OpenGL/gl3.h>
 
 #include "renderer.h"
+#include "shader.h"
 
 #include <iostream>
 #include <string>
@@ -27,6 +28,7 @@ static void framebuffer_size_callback(GLFWwindow *, int w, int h) {
  * otherwise
  */
 bool Renderer::init() {
+  // Initialize GLFW
   if (!glfwInit()) {
     std::cerr << "Failed to initialize GLFW\n";
     return false;
@@ -37,6 +39,7 @@ bool Renderer::init() {
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+  // Create the window
   window = glfwCreateWindow(800, 600, "Spatial Memory Lab", nullptr, nullptr);
 
   if (!window) {
@@ -45,11 +48,16 @@ bool Renderer::init() {
     return false;
   }
 
+  // Make the context current
   glfwMakeContextCurrent(window);
   glfwSwapInterval(1);
-
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+  // TODO:Create the shader
+  // Shader shader;
+  // shader.create(vertexShaderSource, fragmentShaderSource);
+
+  // Define the viewport
   int width, height;
   glfwGetFramebufferSize(window, &width, &height);
   glViewport(0, 0, width, height);

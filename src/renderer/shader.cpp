@@ -2,6 +2,7 @@
 
 #include <GLFW/glfw3.h>
 #include <OpenGL/gl3.h>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "helpers/file.h"
 #include "shader.h"
@@ -137,6 +138,25 @@ void Shader::use() const {
   if (program) {
     glUseProgram(program);
   }
+}
+
+/**
+ * @brief Set the matrix uniform
+ * @param name const std::string& name of the uniform
+ * @param mat const glm::mat4& matrix
+ */
+void Shader::setMat4(const std::string &name, const glm::mat4 &mat) const {
+  // Get the uniform location
+  int loc = glGetUniformLocation(program, name.c_str());
+
+  // Check if the uniform location was found
+  if (loc == -1) {
+    std::cerr << "Uniform location not found: " << name << "\n";
+    return;
+  }
+
+  // Set the matrix uniform
+  glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(mat));
 }
 
 /**

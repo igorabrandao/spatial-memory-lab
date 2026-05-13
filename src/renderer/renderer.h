@@ -2,6 +2,7 @@
 
 #include "shader.h"
 #include "mesh.h"
+#include "math/transform.h"
 
 // Forward declaration (don't include the header file)
 struct GLFWwindow;
@@ -28,6 +29,9 @@ private:
 
   // Mesh
   Mesh mesh;
+
+  // Transform
+  math::Transform transform;
 
   // Render the window
   void render();

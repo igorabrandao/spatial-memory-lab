@@ -2,6 +2,9 @@
 
 #include <GLFW/glfw3.h>
 #include <OpenGL/gl3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "mesh.h"
 #include "renderer.h"
@@ -53,6 +56,9 @@ bool Renderer::init() {
   glfwMakeContextCurrent(window);
   glfwSwapInterval(1);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+  // Enable depth testing (for 3D rendering)
+  glEnable(GL_DEPTH_TEST);
 
   // -----------------------------
   // Create shader
@@ -359,12 +365,41 @@ void Renderer::updateFPS() {
  * @brief Render the window
  */
 void Renderer::render() {
-  // Clear the color buffer
+  // Get the framebuffer size
+  int width, height;
+  glfwGetFramebufferSize(window, &width, &height);
+
+  // Set the height to 1 if it is 0
+  height = height == 0 ? 1 : height;
+
+  // Set the viewport to the new size
+  glViewport(0, 0, width, height);
+
+  // Clear the color and depth buffers
   glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  // -----------------------------
+  // Create the MVP matrix
+  // -----------------------------
+
+  // Create the model matrix
+  glm::mat4 model = transform.getModelMatrix();
+
+  // Create the view matrix
+  glm::mat4 view =
+      glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+
+  // Create the projection matrix
+  glm::mat4 projection = glm::perspective(glm::radians(45.0f),
+                                          (float)width / height, 0.1f, 100.0f);
+
+  // Create the MVP matrix
+  glm::mat4 MVP = projection * view * model;
 
   // Use the shader
   shader.use();
+  shader.setMat4("MVP", MVP);
 
   // Draw the mesh
   mesh.draw();

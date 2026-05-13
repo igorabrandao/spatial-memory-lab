@@ -1,5 +1,6 @@
 #pragma once
 
+#include <glm/glm.hpp>
 #include <string>
 
 namespace renderer {
@@ -11,10 +12,13 @@ public:
 
   // Create the shader from files
   bool createFromFiles(const std::string &vertexPath,
-                    const std::string &fragmentPath);
+                       const std::string &fragmentPath);
 
   // Use the shader
   void use() const;
+
+  // Set the matrix uniform
+  void setMat4(const std::string &name, const glm::mat4 &mat) const;
 
   // Cleanup the shader
   void cleanup();

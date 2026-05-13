@@ -399,6 +399,9 @@ void Renderer::render() {
   glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  // Use the shader
+  shader.use();
+
   // -----------------------------
   // Create the MVP matrix
   // -----------------------------
@@ -407,23 +410,25 @@ void Renderer::render() {
   glm::mat4 model = transform.getModelMatrix();
 
   // Create the view matrix
-  glm::mat4 view =
-      glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+  glm::mat4 view = glm::lookAt(glm::vec3(3.0f, 3.0f, 4.0f), // camera position
+                               glm::vec3(0.0f, 0.0f, 0.0f), // target (center)
+                               glm::vec3(0.0f, 1.0f, 0.0f)  // up
+  );
 
   // Create the projection matrix
   glm::mat4 projection = glm::perspective(glm::radians(45.0f),
                                           (float)width / height, 0.1f, 100.0f);
 
-  // Create the MVP matrix
-  glm::mat4 MVP = projection * view * model;
+  // --- Cube MVP matrix ---
+  glm::mat4 cubeMVP = projection * view * model;
+  shader.setMat4("MVP", cubeMVP);
+  cubeMesh.draw(); // Draw the cube mesh
 
-  // Use the shader
-  shader.use();
-  shader.setMat4("MVP", MVP);
-
-  // Draw the meshes
-  gridMesh.draw();
-  cubeMesh.draw();
+  // --- Grid MVP matrix ---
+  glm::mat4 gridModel = glm::mat4(1.0f);
+  glm::mat4 gridMVP = projection * view * gridModel;
+  shader.setMat4("MVP", gridMVP);
+  gridMesh.draw(); // Draw the grid mesh
 }
 
 /**

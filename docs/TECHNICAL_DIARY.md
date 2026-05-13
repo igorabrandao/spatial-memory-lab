@@ -1,3 +1,29 @@
+# 2026-05-113
+
+Problems:
+
+- Renderer getting bloatted
+- Rendering the multiple meshes in the scene
+- Camera perspective
+
+Hypothesis:
+
+- The renderer seems to be the main component of the platform. As a result every piece of the render loop is getting insite of it.
+- Drawing, transforming and handling different meshes involved duplicating or using similar codes.
+- Adjusting the camera perspective manually can be a huge pain.
+
+Testing:
+
+- I've trying to separate the smaller components inside the renderer such as: update vs render fns().
+- Today I've created 2 meshes, one for a cube and another for the grid.
+- Did some playgroung with glm::lookAt()
+
+Results:
+
+- Even if we have more separating on the codebase inside the renderer + new modules in the platform, the renderer continues to be the most complex piece of the platform.
+- Not much to say about the meshes situation, I didn't have much time to think about it. For now the only solution I can think of is having an array of meshes to handle them individually without increasing the codebase exponentially.
+- Not much to say about it either, but as far I know it's possible creating some scenes controls including zoom-in/out, camera rotation and movement to the axis.
+
 # 2026-05-12
 
 Problem:

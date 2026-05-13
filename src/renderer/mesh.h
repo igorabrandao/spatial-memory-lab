@@ -24,7 +24,7 @@ private:
   unsigned int EBO = 0;
 
   // Number of vertices
-  unsigned int vertexCount = 0;
+  unsigned int vertexCount = 3;
 };
 
 } // namespace renderer

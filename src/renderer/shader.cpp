@@ -110,8 +110,7 @@ bool Shader::create(const char *vertexSrc, const char *fragmentSrc) {
  * @return bool true if the shader was created successfully, false otherwise
  */
 bool Shader::createFromFiles(const std::string &vertexPath,
-                          const std::string &fragmentPath) {
-
+                             const std::string &fragmentPath) {
   // Read the files
   std::string vertexCode = helpers::File::read(vertexPath);
   std::string fragmentCode = helpers::File::read(fragmentPath);

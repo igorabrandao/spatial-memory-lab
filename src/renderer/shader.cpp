@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <OpenGL/gl3.h>
 
+#include "helpers/file.h"
 #include "shader.h"
 
 #include <iostream>
@@ -100,6 +101,30 @@ bool Shader::create(const char *vertexSrc, const char *fragmentSrc) {
   glDeleteShader(fragmentShader);
 
   return true;
+}
+
+/**
+ * @brief Load the shader from a file
+ * @param vertexPath const std::string& path to the vertex shader file
+ * @param fragmentPath const std::string& path to the fragment shader file
+ * @return bool true if the shader was loaded successfully, false otherwise
+ */
+bool Shader::loadFromFile(const std::string &vertexPath,
+                          const std::string &fragmentPath) {
+
+  std::string vertexCode = helpers::File::read(vertexPath);
+  std::string fragmentCode = helpers::File::read(fragmentPath);
+
+  if (vertexCode.empty() || fragmentCode.empty()) {
+    std::cerr << "Failed to load shader files: " << vertexPath << " or "
+              << fragmentPath << "\n";
+    return false;
+  }
+
+  const char *vSrc = vertexCode.c_str();
+  const char *fSrc = fragmentCode.c_str();
+
+  return create(vSrc, fSrc);
 }
 
 /**

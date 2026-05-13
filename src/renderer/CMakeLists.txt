@@ -19,6 +19,8 @@ target_link_libraries(renderer
     PUBLIC
     glfw
     OpenGL::GL
+    PRIVATE
+    helpers
 )
 
 # Compile definitions

@@ -1,4 +1,5 @@
 add_subdirectory(core)
+add_subdirectory(helpers)
 add_subdirectory(math)
 add_subdirectory(networking)
 add_subdirectory(renderer)

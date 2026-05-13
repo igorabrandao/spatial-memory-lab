@@ -1,11 +1,17 @@
 #pragma once
 
+#include <string>
+
 namespace renderer {
 
 class Shader {
 public:
   // Create the shader
   bool create(const char *vertexSrc, const char *fragmentSrc);
+
+  // Load the shader from a file
+  bool loadFromFile(const std::string &vertexPath,
+                    const std::string &fragmentPath);
 
   // Use the shader
   void use() const;

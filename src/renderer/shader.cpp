@@ -112,9 +112,11 @@ bool Shader::create(const char *vertexSrc, const char *fragmentSrc) {
 bool Shader::createFromFiles(const std::string &vertexPath,
                           const std::string &fragmentPath) {
 
+  // Read the files
   std::string vertexCode = helpers::File::read(vertexPath);
   std::string fragmentCode = helpers::File::read(fragmentPath);
 
+  // Check if the files were read successfully
   if (vertexCode.empty() || fragmentCode.empty()) {
     std::cerr << "Failed to load shader files: " << vertexPath << " or "
               << fragmentPath << "\n";

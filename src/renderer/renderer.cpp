@@ -334,8 +334,11 @@ bool Renderer::init() {
  */
 void Renderer::run() {
   while (!glfwWindowShouldClose(window)) {
-    glfwPollEvents();        // Poll events
-    render();                // Render the window
+    glfwPollEvents(); // Poll events
+
+    update(); // Update the renderer
+    render(); // Render the window
+
     glfwSwapBuffers(window); // Swap buffers
     updateFPS();             // Update the FPS counter
   }
@@ -362,6 +365,17 @@ void Renderer::updateFPS() {
 }
 
 /**
+ * @brief Update the renderer
+ */
+void Renderer::update() {
+  // Get the current time
+  float time = (float)glfwGetTime();
+
+  // Set the rotation of the cube
+  transform.setRotation({time * 0.5f, time, 0.0f});
+}
+
+/**
  * @brief Render the window
  */
 void Renderer::render() {
@@ -378,9 +392,6 @@ void Renderer::render() {
   // Clear the color and depth buffers
   glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  // Set the rotation of the cube
-  transform.setRotation({glfwGetTime() * 0.5f, glfwGetTime(), 0.0f});
 
   // -----------------------------
   // Create the MVP matrix

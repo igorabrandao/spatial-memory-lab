@@ -33,6 +33,9 @@ private:
   // Transform
   math::Transform transform;
 
+  // Update the renderer
+  void update();
+
   // Render the window
   void render();
 

@@ -3,8 +3,8 @@
 #include <GLFW/glfw3.h>
 #include <OpenGL/gl3.h>
 
-#include "renderer.h"
 #include "mesh.h"
+#include "renderer.h"
 #include "shader.h"
 
 #include <iostream>
@@ -61,20 +61,25 @@ bool Renderer::init() {
   // Create the shader source code
   const char *vertexShaderSource = R"(
         #version 330 core
-        layout (location = 0) in vec3 aPos;
-        
-        void main() {
-            gl_Position = vec4(aPos, 1.0);
-        }
+            layout (location = 0) in vec3 aPos;
+            layout (location = 1) in vec3 aColor;
+
+            out vec3 ourColor;
+
+            void main() {
+                gl_Position = vec4(aPos, 1.0);
+                ourColor = aColor;
+            }
         )";
 
   const char *fragmentShaderSource = R"(
         #version 330 core
-        out vec4 FragColor;
-        
-        void main() {
-            FragColor = vec4(1.0, 0.5, 0.2, 1.0);
-        }
+            in vec3 ourColor;
+            out vec4 FragColor;
+
+            void main() {
+                FragColor = vec4(ourColor, 1.0);
+            }
         )";
 
   // Create the shader using the source code
@@ -90,7 +95,12 @@ bool Renderer::init() {
   // -----------------------------
 
   // Define the vertices
-  float vertices[] = {0.0f, 0.5f, 0.0f, -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f};
+  float vertices[] = {
+      // position        // color
+      0.0f,  0.5f,  0.0f, 1.0f, 0.0f, 0.0f, // red
+      -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // green
+      0.5f,  -0.5f, 0.0f, 0.0f, 0.0f, 1.0f  // blue
+  };
 
   // Create the mesh
   mesh.create(vertices, sizeof(vertices));

@@ -14,8 +14,8 @@ namespace renderer {
  * @return bool true if the mesh was created successfully, false otherwise
  */
 bool Mesh::create(const float *vertices, unsigned int size) {
-  // Calculate the number of vertices (3 vertices per triangle x, y, z)
-  vertexCount = size / (3 * sizeof(float));
+  // Calculate the number of vertices (3 vertices per triangle x, y, z, r, g, b)
+  vertexCount = size / (6 * sizeof(float));
 
   // Create the vertex array object
   glGenVertexArrays(1, &VAO);
@@ -27,8 +27,12 @@ bool Mesh::create(const float *vertices, unsigned int size) {
   glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
 
   // Configure the vertex attributes
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
   glEnableVertexAttribArray(0);
+
+  // Configure the color attribute
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+  glEnableVertexAttribArray(1);
 
   // Unbind the vertex array object
   glBindVertexArray(0);

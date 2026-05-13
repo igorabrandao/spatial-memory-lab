@@ -58,8 +58,8 @@ bool Renderer::init() {
   // Create shader
   // -----------------------------
 
-  // Load the shader from files
-  if (!shader.loadFromFile("shaders/basic.vert", "shaders/basic.frag")) {
+  // Create the shader from files
+  if (!shader.createFromFiles("shaders/basic.vert", "shaders/basic.frag")) {
     std::cerr << "Failed to load shader\n";
     return false;
   }

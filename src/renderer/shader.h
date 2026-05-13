@@ -9,8 +9,8 @@ public:
   // Create the shader
   bool create(const char *vertexSrc, const char *fragmentSrc);
 
-  // Load the shader from a file
-  bool loadFromFile(const std::string &vertexPath,
+  // Create the shader from files
+  bool createFromFiles(const std::string &vertexPath,
                     const std::string &fragmentPath);
 
   // Use the shader

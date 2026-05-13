@@ -104,12 +104,12 @@ bool Shader::create(const char *vertexSrc, const char *fragmentSrc) {
 }
 
 /**
- * @brief Load the shader from a file
+ * @brief Create the shader from files
  * @param vertexPath const std::string& path to the vertex shader file
  * @param fragmentPath const std::string& path to the fragment shader file
- * @return bool true if the shader was loaded successfully, false otherwise
+ * @return bool true if the shader was created successfully, false otherwise
  */
-bool Shader::loadFromFile(const std::string &vertexPath,
+bool Shader::createFromFiles(const std::string &vertexPath,
                           const std::string &fragmentPath) {
 
   std::string vertexCode = helpers::File::read(vertexPath);
@@ -121,9 +121,11 @@ bool Shader::loadFromFile(const std::string &vertexPath,
     return false;
   }
 
+  // Convert the code to const char*
   const char *vSrc = vertexCode.c_str();
   const char *fSrc = fragmentCode.c_str();
 
+  // Create the shader
   return create(vSrc, fSrc);
 }
 

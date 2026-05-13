@@ -76,7 +76,7 @@ bool Renderer::init() {
   // -----------------------------
 
   // Generate the grid mesh
-  auto grid = renderer::geometry::generateGrid(10, 0.1f);
+  auto grid = renderer::geometry::generateGrid(20, 1.0f);
   gridMesh.create(grid.data(), grid.size() * sizeof(float));
   gridMesh.setDrawMode(GL_LINES);
 
@@ -379,6 +379,9 @@ void Renderer::update() {
 
   // Set the rotation of the cube
   transform.setRotation({time * 0.5f, time, 0.0f});
+
+  // Set the position of the cube
+  transform.setPosition({0.0f, 0.5f, 0.0f});
 }
 
 /**
@@ -410,7 +413,7 @@ void Renderer::render() {
   glm::mat4 model = transform.getModelMatrix();
 
   // Create the view matrix
-  glm::mat4 view = glm::lookAt(glm::vec3(3.0f, 3.0f, 4.0f), // camera position
+  glm::mat4 view = glm::lookAt(glm::vec3(3.0f, 2.5f, 4.0f), // camera position
                                glm::vec3(0.0f, 0.0f, 0.0f), // target (center)
                                glm::vec3(0.0f, 1.0f, 0.0f)  // up
   );

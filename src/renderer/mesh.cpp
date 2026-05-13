@@ -31,12 +31,16 @@ bool Mesh::create(const float *vertices, unsigned int size) {
   glEnableVertexAttribArray(0);
 
   // Configure the color attribute
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                        (void *)(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
 
   // Unbind the vertex array object
   glBindVertexArray(0);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+  // Set the draw mode
+  setDrawMode(GL_TRIANGLES);
 
   // Return success flag
   return true;
@@ -50,12 +54,18 @@ void Mesh::draw() const {
   glBindVertexArray(VAO);
 
   // Draw the mesh
-  glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+  glDrawArrays(drawMode, 0, vertexCount);
 
   // Unbind the vertex array object
   glBindVertexArray(0);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
+
+/**
+ * @brief Set draw mode
+ * @param mode unsigned int mode
+ */
+void Mesh::setDrawMode(unsigned int mode) { drawMode = mode; }
 
 /**
  * @brief Cleanup GPU resources

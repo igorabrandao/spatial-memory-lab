@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "geometry/grid.h"
 #include "mesh.h"
 #include "renderer.h"
 #include "shader.h"
@@ -71,8 +72,13 @@ bool Renderer::init() {
   }
 
   // -----------------------------
-  // Create mesh
+  // Create meshes
   // -----------------------------
+
+  // Generate the grid mesh
+  auto grid = renderer::geometry::generateGrid(10, 0.1f);
+  gridMesh.create(grid.data(), grid.size() * sizeof(float));
+  gridMesh.setDrawMode(GL_LINES);
 
   // Define the vertices
   float cubeVertices[] = {
@@ -313,8 +319,8 @@ bool Renderer::init() {
       1,
   };
 
-  // Create the mesh
-  mesh.create(cubeVertices, sizeof(cubeVertices));
+  // Create the cube mesh
+  cubeMesh.create(cubeVertices, sizeof(cubeVertices));
 
   // -----------------------------
   // Viewport
@@ -415,8 +421,9 @@ void Renderer::render() {
   shader.use();
   shader.setMat4("MVP", MVP);
 
-  // Draw the mesh
-  mesh.draw();
+  // Draw the meshes
+  gridMesh.draw();
+  cubeMesh.draw();
 }
 
 /**
@@ -427,7 +434,8 @@ void Renderer::cleanup() {
   glfwTerminate();
 
   // Cleanup the mesh and shader
-  mesh.cleanup();
+  cubeMesh.cleanup();
+  gridMesh.cleanup();
   shader.cleanup();
 }
 

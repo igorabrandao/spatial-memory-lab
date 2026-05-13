@@ -11,6 +11,7 @@ add_library(renderer STATIC
     renderer.cpp
     mesh.cpp
     shader.cpp
+    geometry/grid.cpp
 )
 
 # Include directories

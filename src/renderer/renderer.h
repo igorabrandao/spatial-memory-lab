@@ -27,8 +27,9 @@ private:
   // Shader
   Shader shader;
 
-  // Mesh
-  Mesh mesh;
+  // Meshes
+  Mesh cubeMesh;
+  Mesh gridMesh;
 
   // Transform
   math::Transform transform;

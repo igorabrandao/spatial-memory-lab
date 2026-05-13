@@ -5,6 +5,8 @@ find_package(OpenGL REQUIRED)
 # Renderer implementation (window, OpenGL, etc.)
 add_library(renderer STATIC
     renderer.cpp
+    mesh.cpp
+    shader.cpp
 )
 
 # Include directories

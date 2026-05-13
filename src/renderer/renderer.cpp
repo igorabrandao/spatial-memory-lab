@@ -4,6 +4,7 @@
 #include <OpenGL/gl3.h>
 
 #include "renderer.h"
+#include "mesh.h"
 #include "shader.h"
 
 #include <iostream>
@@ -53,11 +54,50 @@ bool Renderer::init() {
   glfwSwapInterval(1);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-  // TODO:Create the shader
-  // Shader shader;
-  // shader.create(vertexShaderSource, fragmentShaderSource);
+  // -----------------------------
+  // Create shader
+  // -----------------------------
 
-  // Define the viewport
+  // Create the shader source code
+  const char *vertexShaderSource = R"(
+        #version 330 core
+        layout (location = 0) in vec3 aPos;
+        
+        void main() {
+            gl_Position = vec4(aPos, 1.0);
+        }
+        )";
+
+  const char *fragmentShaderSource = R"(
+        #version 330 core
+        out vec4 FragColor;
+        
+        void main() {
+            FragColor = vec4(1.0, 0.5, 0.2, 1.0);
+        }
+        )";
+
+  // Create the shader using the source code
+  shader.create(vertexShaderSource, fragmentShaderSource);
+
+  if (!shader.create(vertexShaderSource, fragmentShaderSource)) {
+    std::cerr << "Failed to create shader\n";
+    return false;
+  }
+
+  // -----------------------------
+  // Create mesh
+  // -----------------------------
+
+  // Define the vertices
+  float vertices[] = {0.0f, 0.5f, 0.0f, -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f};
+
+  // Create the mesh
+  mesh.create(vertices, sizeof(vertices));
+
+  // -----------------------------
+  // Viewport
+  // -----------------------------
   int width, height;
   glfwGetFramebufferSize(window, &width, &height);
   glViewport(0, 0, width, height);
@@ -104,8 +144,15 @@ void Renderer::updateFPS() {
  * @brief Render the window
  */
 void Renderer::render() {
+  // Clear the color buffer
   glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT); // Clear the color buffer
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  // Use the shader
+  shader.use();
+
+  // Draw the mesh
+  mesh.draw();
 }
 
 /**
@@ -114,6 +161,10 @@ void Renderer::render() {
 void Renderer::cleanup() {
   glfwDestroyWindow(window);
   glfwTerminate();
+
+  // Cleanup the mesh and shader
+  mesh.cleanup();
+  shader.cleanup();
 }
 
 } // namespace renderer

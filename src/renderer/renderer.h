@@ -1,5 +1,8 @@
 #pragma once
 
+#include "shader.h"
+#include "mesh.h"
+
 // Forward declaration (don't include the header file)
 struct GLFWwindow;
 
@@ -19,6 +22,12 @@ public:
 private:
   // Window pointer
   GLFWwindow *window = nullptr;
+
+  // Shader
+  Shader shader;
+
+  // Mesh
+  Mesh mesh;
 
   // Render the window
   void render();

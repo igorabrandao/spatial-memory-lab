@@ -1,3 +1,7 @@
+# -------------------------------------------------------------
+# Renderer module
+# -------------------------------------------------------------
+
 # Find dependencies
 find_package(glfw3 REQUIRED)
 find_package(OpenGL REQUIRED)
@@ -19,6 +23,7 @@ target_link_libraries(renderer
     PUBLIC
     glfw
     OpenGL::GL
+    math
     PRIVATE
     helpers
 )

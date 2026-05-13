@@ -14,6 +14,9 @@ namespace renderer {
  * @return bool true if the mesh was created successfully, false otherwise
  */
 bool Mesh::create(const float *vertices, unsigned int size) {
+  // Calculate the number of vertices (3 vertices per triangle x, y, z)
+  vertexCount = size / (3 * sizeof(float));
+
   // Create the vertex array object
   glGenVertexArrays(1, &VAO);
   glBindVertexArray(VAO);

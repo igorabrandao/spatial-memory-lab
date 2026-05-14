@@ -40,50 +40,32 @@ glm::vec3 Camera::getFront() const {
 }
 
 /**
+ * @brief Get the right vector
+ * @return The right vector
+ */
+glm::vec3 Camera::getRight() const {
+  return glm::normalize(glm::cross(getFront(), glm::vec3(0, 1, 0)));
+}
+
+/**
+ * @brief Get the up vector
+ * @return The up vector
+ */
+glm::vec3 Camera::getUp() const { return glm::vec3(0, 1, 0); }
+
+/**
+ * @brief Get the down vector
+ * @return The down vector
+ */
+glm::vec3 Camera::getDown() const { return glm::vec3(0, -1, 0); }
+
+/**
  * @brief Get the view matrix
  * @return The view matrix
  */
 glm::mat4 Camera::getViewMatrix() const {
   return glm::lookAt(position, position + getFront(),
                      glm::vec3(0.0f, 1.0f, 0.0f));
-}
-
-/**
- * @brief Process keyboard input
- * @param key The key pressed
- * @param deltaTime The time since the last frame
- */
-void Camera::processKeyboard(int key, float deltaTime) {
-  float velocity = speed * deltaTime;
-  glm::vec3 front = getFront();
-  glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0, 1, 0)));
-
-  if (key == GLFW_KEY_W)
-    position += front * velocity;
-  if (key == GLFW_KEY_S)
-    position -= front * velocity;
-  if (key == GLFW_KEY_A)
-    position -= right * velocity;
-  if (key == GLFW_KEY_D)
-    position += right * velocity;
-}
-
-/**
- * @brief Process mouse input
- * @param xoffset The x offset
- * @param yoffset The y offset
- */
-void Camera::processMouse(float xoffset, float yoffset) {
-  xoffset *= sensitivity;
-  yoffset *= sensitivity;
-
-  yaw += xoffset;
-  pitch += yoffset;
-
-  if (pitch > 89.0f)
-    pitch = 89.0f;
-  if (pitch < -89.0f)
-    pitch = -89.0f;
 }
 
 /**
@@ -106,32 +88,70 @@ void Camera::moveBackward(float deltaTime) {
  * @brief Move the camera left
  * @param deltaTime The time since the last frame
  */
-// void Camera::moveLeft(float deltaTime) {
-//   position -= getRight() * speed * deltaTime;
-// }
+void Camera::moveLeft(float deltaTime) {
+  position -= getRight() * speed * deltaTime;
+}
 
-// /**
-//  * @brief Move the camera right
-//  * @param deltaTime The time since the last frame
-//  */
-// void Camera::moveRight(float deltaTime) {
-//   position += getRight() * speed * deltaTime;
-// }
+/**
+ * @brief Move the camera right
+ * @param deltaTime The time since the last frame
+ */
+void Camera::moveRight(float deltaTime) {
+  position += getRight() * speed * deltaTime;
+}
 
-// /**
-//  * @brief Move the camera up
-//  * @param deltaTime The time since the last frame
-//  */
-// void Camera::moveUp(float deltaTime) {
-//   position += getUp() * speed * deltaTime;
-// }
+/**
+ * @brief Move the camera up
+ * @param deltaTime The time since the last frame
+ */
+void Camera::moveUp(float deltaTime) {
+  position += getUp() * speed * deltaTime;
+}
 
-// /**
-//  * @brief Move the camera down
-//  * @param deltaTime The time since the last frame
-//  */
-// void Camera::moveDown(float deltaTime) {
-//   position -= getUp() * speed * deltaTime;
-// }
+/**
+ * @brief Move the camera down
+ * @param deltaTime The time since the last frame
+ */
+void Camera::moveDown(float deltaTime) {
+  position -= getUp() * speed * deltaTime;
+}
+
+/**
+ * @brief Process keyboard input
+ * @param key The key pressed
+ * @param deltaTime The time since the last frame
+ */
+void Camera::processKeyboard(int key, float deltaTime) {
+  if (key == GLFW_KEY_W)
+    moveForward(deltaTime);
+  if (key == GLFW_KEY_S)
+    moveBackward(deltaTime);
+  if (key == GLFW_KEY_A)
+    moveLeft(deltaTime);
+  if (key == GLFW_KEY_D)
+    moveRight(deltaTime);
+  if (key == GLFW_KEY_SPACE)
+    moveUp(deltaTime);
+  if (key == GLFW_KEY_LEFT_SHIFT)
+    moveDown(deltaTime);
+}
+
+/**
+ * @brief Process mouse input
+ * @param xoffset The x offset
+ * @param yoffset The y offset
+ */
+void Camera::processMouse(float xoffset, float yoffset) {
+  xoffset *= sensitivity;
+  yoffset *= sensitivity;
+
+  yaw += xoffset;
+  pitch += yoffset;
+
+  if (pitch > 89.0f)
+    pitch = 89.0f;
+  if (pitch < -89.0f)
+    pitch = -89.0f;
+}
 
 } // namespace camera

@@ -371,14 +371,54 @@ void Renderer::updateFPS() {
 }
 
 /**
+ * @brief Process the input
+ * @param deltaTime The time since the last frame
+ */
+void Renderer::processInput(float deltaTime) {
+  // Process the keyboard input
+  if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    camera.processKeyboard(GLFW_KEY_W, deltaTime);
+
+  if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    camera.processKeyboard(GLFW_KEY_S, deltaTime);
+
+  if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    camera.processKeyboard(GLFW_KEY_A, deltaTime);
+
+  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    camera.processKeyboard(GLFW_KEY_D, deltaTime);
+
+  if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    camera.processKeyboard(GLFW_KEY_SPACE, deltaTime);
+
+  if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+    camera.processKeyboard(GLFW_KEY_LEFT_SHIFT, deltaTime);
+}
+
+/**
  * @brief Update the renderer
+ * @note Order of operations:
+ * 1. Get the current time
+ * 2. Calculate delta time
+ * 3. Store current frame
+ * 4. Process the input (keyboard, mouse, etc.)
+ * 5. Update the transform (rotation, position, etc.)
  */
 void Renderer::update() {
   // Get the current time
-  float time = (float)glfwGetTime();
+  float currentFrame = (float)glfwGetTime();
+
+  // Calculate delta time
+  float deltaTime = currentFrame - lastFrame;
+
+  // Store current frame
+  lastFrame = currentFrame;
+
+  // Process the keyboard input
+  processInput(deltaTime);
 
   // Set the rotation of the cube
-  transform.setRotation({time * 0.5f, time, 0.0f});
+  transform.setRotation({currentFrame * 0.5f, currentFrame, 0.0f});
 
   // Set the position of the cube
   transform.setPosition({0.0f, 0.5f, 0.0f});

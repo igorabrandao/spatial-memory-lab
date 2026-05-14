@@ -50,8 +50,11 @@ private:
   // Process the input
   void processInput(float deltaTime);
 
-  // Last time the FPS was updated
+  // Last time the FPS was updated (persisted across frames)
   double lastTime = 0.0;
+
+  // Last frame time
+  float lastFrame = 0.0f;
 
   // Frame count
   int frameCount = 0;

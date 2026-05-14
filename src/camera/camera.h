@@ -19,10 +19,10 @@ public:
   // Camera movement
   void moveForward(float deltaTime);
   void moveBackward(float deltaTime);
-  // void moveLeft(float deltaTime);
-  // void moveRight(float deltaTime);
-  // void moveUp(float deltaTime);
-  // void moveDown(float deltaTime);
+  void moveLeft(float deltaTime);
+  void moveRight(float deltaTime);
+  void moveUp(float deltaTime);
+  void moveDown(float deltaTime);
 
 private:
   // Position
@@ -40,6 +40,9 @@ private:
 
   // Get the front vector
   glm::vec3 getFront() const;
+  glm::vec3 getRight() const;
+  glm::vec3 getUp() const;
+  glm::vec3 getDown() const;
 };
 
 } // namespace camera

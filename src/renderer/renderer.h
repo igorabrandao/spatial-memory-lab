@@ -47,6 +47,9 @@ private:
   // Update the FPS counter
   void updateFPS();
 
+  // Process the input
+  void processInput(float deltaTime);
+
   // Last time the FPS was updated
   double lastTime = 0.0;
 

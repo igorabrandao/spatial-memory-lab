@@ -86,4 +86,52 @@ void Camera::processMouse(float xoffset, float yoffset) {
     pitch = -89.0f;
 }
 
+/**
+ * @brief Move the camera forward
+ * @param deltaTime The time since the last frame
+ */
+void Camera::moveForward(float deltaTime) {
+  position += getFront() * speed * deltaTime;
+}
+
+/**
+ * @brief Move the camera backward
+ * @param deltaTime The time since the last frame
+ */
+void Camera::moveBackward(float deltaTime) {
+  position -= getFront() * speed * deltaTime;
+}
+
+/**
+ * @brief Move the camera left
+ * @param deltaTime The time since the last frame
+ */
+// void Camera::moveLeft(float deltaTime) {
+//   position -= getRight() * speed * deltaTime;
+// }
+
+// /**
+//  * @brief Move the camera right
+//  * @param deltaTime The time since the last frame
+//  */
+// void Camera::moveRight(float deltaTime) {
+//   position += getRight() * speed * deltaTime;
+// }
+
+// /**
+//  * @brief Move the camera up
+//  * @param deltaTime The time since the last frame
+//  */
+// void Camera::moveUp(float deltaTime) {
+//   position += getUp() * speed * deltaTime;
+// }
+
+// /**
+//  * @brief Move the camera down
+//  * @param deltaTime The time since the last frame
+//  */
+// void Camera::moveDown(float deltaTime) {
+//   position -= getUp() * speed * deltaTime;
+// }
+
 } // namespace camera

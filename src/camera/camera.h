@@ -16,6 +16,14 @@ public:
   void processKeyboard(int key, float deltaTime);
   void processMouse(float xoffset, float yoffset);
 
+  // Camera movement
+  void moveForward(float deltaTime);
+  void moveBackward(float deltaTime);
+  // void moveLeft(float deltaTime);
+  // void moveRight(float deltaTime);
+  // void moveUp(float deltaTime);
+  // void moveDown(float deltaTime);
+
 private:
   // Position
   glm::vec3 position;

@@ -1,24 +1,24 @@
 # -------------------------------------------------------------
-# Math module
+# Camera module
 # -------------------------------------------------------------
 
-# Find the glm library
+# Find the dependencies
 find_package(glm REQUIRED)
 
-# Add the math library
-add_library(math STATIC
-    transform.cpp
+# Add the camera library
+add_library(camera STATIC
+    camera.cpp
 )
 
 # Include directories
-target_include_directories(math PUBLIC
+target_include_directories(camera PUBLIC
     ${CMAKE_SOURCE_DIR}/src
 )
 
-# Link the glm library
-target_link_libraries(math PUBLIC glm::glm)
+# Link the dependencies
+target_link_libraries(camera PUBLIC glm::glm)
 
 # Compile definitions
-target_compile_definitions(math PRIVATE
+target_compile_definitions(camera PRIVATE
     GL_SILENCE_DEPRECATION
 )

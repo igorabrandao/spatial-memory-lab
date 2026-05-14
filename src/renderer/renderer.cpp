@@ -412,11 +412,8 @@ void Renderer::render() {
   // Create the model matrix
   glm::mat4 model = transform.getModelMatrix();
 
-  // Create the view matrix
-  glm::mat4 view = glm::lookAt(glm::vec3(3.0f, 2.5f, 4.0f), // camera position
-                               glm::vec3(0.0f, 0.0f, 0.0f), // target (center)
-                               glm::vec3(0.0f, 1.0f, 0.0f)  // up
-  );
+  // Get the view matrix from the camera
+  glm::mat4 view = camera.getViewMatrix();
 
   // Create the projection matrix
   glm::mat4 projection = glm::perspective(glm::radians(45.0f),

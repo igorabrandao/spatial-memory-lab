@@ -1,3 +1,4 @@
+add_subdirectory(camera)
 add_subdirectory(core)
 add_subdirectory(helpers)
 add_subdirectory(math)

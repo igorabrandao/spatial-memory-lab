@@ -25,6 +25,7 @@ target_link_libraries(renderer
     glfw
     OpenGL::GL
     math
+    camera
     PRIVATE
     helpers
 )

@@ -1,4 +1,27 @@
-# 2026-05-113
+# 2026-05-14
+
+Problems:
+
+- How to create a world perspective with a free camera?
+- How to handle the keyboard/mouse inputs and change the look at with it?
+
+Hypothesis:
+
+- We need a camera handler responsible for handling the different viewer perspective:
+  - Yaw for horizontal camera movements (x, z axis);
+  - Pitch for vertical camera movements (y axis);
+  - Roll (TBD);
+- The peripherics need somehow control/change the offset from the current perspective (lastFrame) to the new one (currentFrame). This change in perspective generates the offset necessary to move the viewer in the world.
+
+Testing:
+
+- To accomplish that, we've implemented the camera module following a free-look perspective, to begin with in the constructor of the module we setted up the viewer to face the cube foward `position(0.0f, 1.0f, 3.0f), yaw(-90.0f), pitch(0.0f), speed(3.0f)` and then moving the perspective by changing the `position` attribute.
+
+Results:
+
+- Now we have a world with the grid and one cube, we're able to move freely using both the keyboard and mouse.
+
+# 2026-05-13
 
 Problems:
 

@@ -142,16 +142,19 @@ void Camera::processKeyboard(int key, float deltaTime) {
  * @param yoffset The y offset
  */
 void Camera::processMouse(float xoffset, float yoffset) {
+  // Multiply the offset by the sensitivity
   xoffset *= sensitivity;
   yoffset *= sensitivity;
 
+  // Update the yaw and pitch
   yaw += xoffset;
   pitch += yoffset;
 
+  // Clamp the pitch
   if (pitch > 89.0f)
-    pitch = 89.0f;
+    pitch = 89.0f; // Limit the pitch to 89 degrees
   if (pitch < -89.0f)
-    pitch = -89.0f;
+    pitch = -89.0f; // Limit the pitch to -89 degrees
 }
 
 } // namespace camera

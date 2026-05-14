@@ -1,9 +1,9 @@
 #pragma once
 
-#include "shader.h"
-#include "mesh.h"
-#include "math/transform.h"
 #include "camera/camera.h"
+#include "math/transform.h"
+#include "mesh.h"
+#include "shader.h"
 
 // Forward declaration (don't include the header file)
 struct GLFWwindow;
@@ -58,6 +58,10 @@ private:
 
   // Frame count
   int frameCount = 0;
+
+  // Mouse callback
+  static void mouseCallback(GLFWwindow *window, double xpos, double ypos);
+
 }; // class Renderer
 
 } // namespace renderer

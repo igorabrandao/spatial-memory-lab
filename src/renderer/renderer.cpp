@@ -61,6 +61,13 @@ bool Renderer::init() {
   // Enable depth testing (for 3D rendering)
   glEnable(GL_DEPTH_TEST);
 
+  // Set the window user pointer
+  // This is used to pass the renderer instance to the mouse callback
+  glfwSetWindowUserPointer(window, this);
+
+  // Set the mouse callback
+  glfwSetCursorPosCallback(window, mouseCallback);
+
   // -----------------------------
   // Create shader
   // -----------------------------
@@ -474,6 +481,55 @@ void Renderer::cleanup() {
   cubeMesh.cleanup();
   gridMesh.cleanup();
   shader.cleanup();
+}
+
+/**
+ * @brief Mouse callback
+ * @param window GLFWwindow* pointer to the window
+ * @param xpos double x position
+ * @param ypos double y position
+ */
+void Renderer::mouseCallback(GLFWwindow *window, double xpos, double ypos) {
+  static bool firstMouse = true;
+  static float lastX = 0.0f;
+  static float lastY = 0.0f;
+
+  if (firstMouse) {
+    lastX = xpos;
+    lastY = ypos;
+    firstMouse = false;
+  }
+
+  // Calculate the x offset
+  float xoffset = xpos - lastX;
+
+  // Calculate the y offset (inverted since y-coordinates go from bottom to top)
+  float yoffset = lastY - ypos;
+
+  // Update the last X and Y positions
+  lastX = xpos;
+  lastY = ypos;
+
+  /**
+   * Process the mouse movement
+   *
+   * Movement will follow the mouse cursor.
+   *
+   * When the mouse is not moving, the offset will be 0, 0.
+   * When the mouse is moving, the offset will be the difference between the
+   * current and last position.
+   *
+   * The offset is used to update the camera's yaw and pitch.
+   *
+   * The yaw and pitch are used to update the camera's direction.
+   *
+   * The direction is used to update the camera's position.
+   *
+   * The position is used to update the camera's view matrix.
+   */
+  Renderer *renderer =
+      static_cast<Renderer *>(glfwGetWindowUserPointer(window));
+  renderer->camera.processMouse(xoffset, yoffset);
 }
 
 } // namespace renderer

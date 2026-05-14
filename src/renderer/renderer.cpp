@@ -375,24 +375,16 @@ void Renderer::updateFPS() {
  * @param deltaTime The time since the last frame
  */
 void Renderer::processInput(float deltaTime) {
-  // Process the keyboard input
-  if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-    camera.processKeyboard(GLFW_KEY_W, deltaTime);
+  // List of keys to process
+  const int keys[] = {GLFW_KEY_W, GLFW_KEY_S,     GLFW_KEY_A,
+                      GLFW_KEY_D, GLFW_KEY_SPACE, GLFW_KEY_LEFT_SHIFT};
 
-  if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-    camera.processKeyboard(GLFW_KEY_S, deltaTime);
-
-  if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-    camera.processKeyboard(GLFW_KEY_A, deltaTime);
-
-  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-    camera.processKeyboard(GLFW_KEY_D, deltaTime);
-
-  if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-    camera.processKeyboard(GLFW_KEY_SPACE, deltaTime);
-
-  if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-    camera.processKeyboard(GLFW_KEY_LEFT_SHIFT, deltaTime);
+  // Process the keys
+  for (int key : keys) {
+    if (glfwGetKey(window, key) == GLFW_PRESS) {
+      camera.processKeyboard(key, deltaTime);
+    }
+  }
 }
 
 /**
@@ -418,7 +410,7 @@ void Renderer::update() {
   processInput(deltaTime);
 
   // Set the rotation of the cube
-  transform.setRotation({currentFrame * 0.5f, currentFrame, 0.0f});
+  // transform.setRotation({currentFrame * 0.5f, currentFrame, 0.0f});
 
   // Set the position of the cube
   transform.setPosition({0.0f, 0.5f, 0.0f});

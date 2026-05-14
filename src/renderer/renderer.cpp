@@ -494,6 +494,12 @@ void Renderer::mouseCallback(GLFWwindow *window, double xpos, double ypos) {
   static float lastX = 0.0f;
   static float lastY = 0.0f;
 
+  // If the right mouse button is not pressed, return
+  if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_PRESS) {
+    firstMouse = true; // Reset the first mouse flag
+    return;
+  }
+
   if (firstMouse) {
     lastX = xpos;
     lastY = ypos;
@@ -509,6 +515,10 @@ void Renderer::mouseCallback(GLFWwindow *window, double xpos, double ypos) {
   // Update the last X and Y positions
   lastX = xpos;
   lastY = ypos;
+
+  // Get the renderer instance
+  Renderer *renderer =
+      static_cast<Renderer *>(glfwGetWindowUserPointer(window));
 
   /**
    * Process the mouse movement
@@ -527,8 +537,6 @@ void Renderer::mouseCallback(GLFWwindow *window, double xpos, double ypos) {
    *
    * The position is used to update the camera's view matrix.
    */
-  Renderer *renderer =
-      static_cast<Renderer *>(glfwGetWindowUserPointer(window));
   renderer->camera.processMouse(xoffset, yoffset);
 }
 

@@ -10,6 +10,7 @@ target_link_libraries(desktop_app
     PRIVATE
     core
     renderer
+    networking
     glfw
     OpenGL::GL
 )

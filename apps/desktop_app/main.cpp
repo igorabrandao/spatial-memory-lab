@@ -1,9 +1,16 @@
+#include "networking/UdpReceiver.h"
 #include "renderer/renderer.h"
 
 // -------------------------------------------------------------
 // Application entry point
 // -------------------------------------------------------------
 int main() {
+  // Initialize the UDP receiver
+  UdpReceiver receiver;
+
+  // Start the UDP receiver
+  receiver.start(5005);
+
   // Initialize the renderer
   renderer::Renderer renderer;
 
@@ -18,6 +25,9 @@ int main() {
 
   // Cleanup the renderer
   renderer.cleanup();
+
+  // Stop the UDP receiver
+  receiver.stop();
 
   // Exit the application
   return 0;

@@ -13,8 +13,8 @@ target_include_directories(sensors PUBLIC
     ${CMAKE_SOURCE_DIR}/src
 )
 
-# Add the dependencies
-target_link_libraries(sensors PUBLIC networking)
+# Link the glm library
+target_link_libraries(sensors PUBLIC glm::glm)
 
 # Compile definitions
 target_compile_definitions(sensors PRIVATE

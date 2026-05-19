@@ -1,5 +1,6 @@
 #include "networking/UdpReceiver.h"
 #include "renderer/renderer.h"
+#include "sensors/SensorSystem.h"
 
 // -------------------------------------------------------------
 // Application entry point
@@ -11,8 +12,11 @@ int main() {
   // Start the UDP receiver
   receiver.start(5005);
 
+  // Initialize the sensor system
+  sensors::SensorSystem sensorSystem(receiver);
+
   // Initialize the renderer
-  renderer::Renderer renderer;
+  renderer::Renderer renderer(sensorSystem);
 
   // Check if the renderer was initialized successfully
   if (!renderer.init()) {

@@ -26,6 +26,7 @@ target_link_libraries(renderer
     OpenGL::GL
     math
     camera
+    sensors
     PRIVATE
     helpers
 )

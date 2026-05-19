@@ -17,6 +17,18 @@
 namespace renderer {
 
 /**
+ * @brief Constructor
+ * @param sensorSystem SensorSystem reference
+ */
+Renderer::Renderer(sensors::SensorSystem &sensorSystem)
+    : sensorSystem_(sensorSystem) {}
+
+/**
+ * @brief Destructor
+ */
+Renderer::~Renderer() = default;
+
+/**
  * @brief Callback function for when the framebuffer size changes
  * @param window GLFWwindow* pointer to the window
  * @param width int new width
@@ -45,35 +57,35 @@ bool Renderer::init() {
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
   // Create the window
-  window = glfwCreateWindow(800, 600, "Spatial Memory Lab", nullptr, nullptr);
+  window_ = glfwCreateWindow(800, 600, "Spatial Memory Lab", nullptr, nullptr);
 
-  if (!window) {
+  if (!window_) {
     std::cerr << "Failed to create window\n";
     glfwTerminate();
     return false;
   }
 
   // Make the context current
-  glfwMakeContextCurrent(window);
+  glfwMakeContextCurrent(window_);
   glfwSwapInterval(1);
-  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+  glfwSetFramebufferSizeCallback(window_, framebuffer_size_callback);
 
   // Enable depth testing (for 3D rendering)
   glEnable(GL_DEPTH_TEST);
 
   // Set the window user pointer
   // This is used to pass the renderer instance to the mouse callback
-  glfwSetWindowUserPointer(window, this);
+  glfwSetWindowUserPointer(window_, this);
 
   // Set the mouse callback
-  glfwSetCursorPosCallback(window, mouseCallback);
+  glfwSetCursorPosCallback(window_, mouseCallback);
 
   // -----------------------------
   // Create shader
   // -----------------------------
 
   // Create the shader from files
-  if (!shader.createFromFiles("shaders/basic.vert", "shaders/basic.frag")) {
+  if (!shader_.createFromFiles("shaders/basic.vert", "shaders/basic.frag")) {
     cleanup();
     return false;
   }
@@ -84,8 +96,8 @@ bool Renderer::init() {
 
   // Generate the grid mesh
   auto grid = renderer::geometry::generateGrid(20, 1.0f);
-  gridMesh.create(grid.data(), grid.size() * sizeof(float));
-  gridMesh.setDrawMode(GL_LINES);
+  gridMesh_.create(grid.data(), grid.size() * sizeof(float));
+  gridMesh_.setDrawMode(GL_LINES);
 
   // Define the vertices
   float cubeVertices[] = {
@@ -327,17 +339,17 @@ bool Renderer::init() {
   };
 
   // Create the cube mesh
-  cubeMesh.create(cubeVertices, sizeof(cubeVertices));
+  cubeMesh_.create(cubeVertices, sizeof(cubeVertices));
 
   // -----------------------------
   // Viewport
   // -----------------------------
   int width, height;
-  glfwGetFramebufferSize(window, &width, &height);
+  glfwGetFramebufferSize(window_, &width, &height);
   glViewport(0, 0, width, height);
 
-  lastTime = glfwGetTime();
-  frameCount = 0;
+  lastTime_ = glfwGetTime();
+  frameCount_ = 0;
 
   return true;
 }
@@ -346,14 +358,14 @@ bool Renderer::init() {
  * @brief Run the renderer
  */
 void Renderer::run() {
-  while (!glfwWindowShouldClose(window)) {
+  while (!glfwWindowShouldClose(window_)) {
     glfwPollEvents(); // Poll events
 
     update(); // Update the renderer
     render(); // Render the window
 
-    glfwSwapBuffers(window); // Swap buffers
-    updateFPS();             // Update the FPS counter
+    glfwSwapBuffers(window_); // Swap buffers
+    updateFPS();              // Update the FPS counter
   }
 }
 
@@ -362,18 +374,18 @@ void Renderer::run() {
  */
 void Renderer::updateFPS() {
   double currentTime = glfwGetTime();
-  frameCount++;
+  frameCount_++;
 
   // Update the FPS counter if 1 second has passed
-  if (currentTime - lastTime >= 1.0) {
+  if (currentTime - lastTime_ >= 1.0) {
     // Set the window title to the FPS
     std::string title =
-        "Spatial Memory Lab - FPS: " + std::to_string(frameCount);
-    glfwSetWindowTitle(window, title.c_str());
+        "Spatial Memory Lab - FPS: " + std::to_string(frameCount_);
+    glfwSetWindowTitle(window_, title.c_str());
 
     // Reset the frame count and last time
-    frameCount = 0;
-    lastTime = currentTime;
+    frameCount_ = 0;
+    lastTime_ = currentTime;
   }
 }
 
@@ -388,8 +400,8 @@ void Renderer::processInput(float deltaTime) {
 
   // Process the keys
   for (int key : keys) {
-    if (glfwGetKey(window, key) == GLFW_PRESS) {
-      camera.processKeyboard(key, deltaTime);
+    if (glfwGetKey(window_, key) == GLFW_PRESS) {
+      camera_.processKeyboard(key, deltaTime);
     }
   }
 }
@@ -408,10 +420,10 @@ void Renderer::update() {
   float currentFrame = (float)glfwGetTime();
 
   // Calculate delta time
-  float deltaTime = currentFrame - lastFrame;
+  float deltaTime = currentFrame - lastFrame_;
 
   // Store current frame
-  lastFrame = currentFrame;
+  lastFrame_ = currentFrame;
 
   // Process the keyboard input
   processInput(deltaTime);
@@ -420,7 +432,10 @@ void Renderer::update() {
   // transform.setRotation({currentFrame * 0.5f, currentFrame, 0.0f});
 
   // Set the position of the cube
-  transform.setPosition({0.0f, 0.5f, 0.0f});
+  transform_.setPosition({0.0f, 0.5f, 0.0f});
+
+  // Update the sensor system
+  sensorSystem_.update();
 }
 
 /**
@@ -429,7 +444,7 @@ void Renderer::update() {
 void Renderer::render() {
   // Get the framebuffer size
   int width, height;
-  glfwGetFramebufferSize(window, &width, &height);
+  glfwGetFramebufferSize(window_, &width, &height);
 
   // Set the height to 1 if it is 0
   height = height == 0 ? 1 : height;
@@ -442,17 +457,17 @@ void Renderer::render() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // Use the shader
-  shader.use();
+  shader_.use();
 
   // -----------------------------
   // Create the MVP matrix
   // -----------------------------
 
   // Create the model matrix
-  glm::mat4 model = transform.getModelMatrix();
+  glm::mat4 model = transform_.getModelMatrix();
 
   // Get the view matrix from the camera
-  glm::mat4 view = camera.getViewMatrix();
+  glm::mat4 view = camera_.getViewMatrix();
 
   // Create the projection matrix
   glm::mat4 projection = glm::perspective(glm::radians(45.0f),
@@ -460,27 +475,27 @@ void Renderer::render() {
 
   // --- Cube MVP matrix ---
   glm::mat4 cubeMVP = projection * view * model;
-  shader.setMat4("MVP", cubeMVP);
-  cubeMesh.draw(); // Draw the cube mesh
+  shader_.setMat4("MVP", cubeMVP);
+  cubeMesh_.draw(); // Draw the cube mesh
 
   // --- Grid MVP matrix ---
   glm::mat4 gridModel = glm::mat4(1.0f);
   glm::mat4 gridMVP = projection * view * gridModel;
-  shader.setMat4("MVP", gridMVP);
-  gridMesh.draw(); // Draw the grid mesh
+  shader_.setMat4("MVP", gridMVP);
+  gridMesh_.draw(); // Draw the grid mesh
 }
 
 /**
  * @brief Cleanup the renderer
  */
 void Renderer::cleanup() {
-  glfwDestroyWindow(window);
+  glfwDestroyWindow(window_);
   glfwTerminate();
 
   // Cleanup the mesh and shader
-  cubeMesh.cleanup();
-  gridMesh.cleanup();
-  shader.cleanup();
+  cubeMesh_.cleanup();
+  gridMesh_.cleanup();
+  shader_.cleanup();
 }
 
 /**
@@ -537,7 +552,7 @@ void Renderer::mouseCallback(GLFWwindow *window, double xpos, double ypos) {
    *
    * The position is used to update the camera's view matrix.
    */
-  renderer->camera.processMouse(xoffset, yoffset);
+  renderer->camera_.processMouse(xoffset, yoffset);
 }
 
 } // namespace renderer

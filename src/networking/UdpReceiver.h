@@ -45,4 +45,7 @@ private:
 
   // Has packet flag
   bool has_packet_;
+
+  // Packet count
+  unsigned int packet_counter_;
 };

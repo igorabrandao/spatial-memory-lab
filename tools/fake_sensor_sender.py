@@ -7,6 +7,7 @@ This script sends fake sensor data to the sensor system.
 import socket
 import struct
 import time
+import math
 
 # Address and port
 PORT = 5005
@@ -18,8 +19,16 @@ sender_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 # Loop forever sending data to the socket
 i = 0
 while True:
+    # Generate a random angle between 0 and 2π
+    angle = i * 0.01
+
     # Generate identity quaternion
-    quaternion = {"x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0}
+    quaternion = {
+        "x": 0.0,
+        "y": math.sin(angle / 2),
+        "z": 0.0,
+        "w": math.cos(angle / 2),
+    }
 
     # Generate timestamp in nanoseconds
     timestamp = time.time_ns()

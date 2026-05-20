@@ -6,26 +6,29 @@ namespace math {
 /**
  * @brief Constructor
  * @return Transform
+ *
+ * @note The rotation is initialized to an identity quaternion
  */
-Transform::Transform() : position(0.0f), rotation(0.0f), scale(1.0f) {}
+Transform::Transform()
+    : position_(0.0f), rotation_(1.0f, 0.0f, 0.0f, 0.0f), scale_(1.0f) {}
 
 /**
  * @brief Set the position
  * @param pos const glm::vec3& position
  */
-void Transform::setPosition(const glm::vec3 &pos) { position = pos; }
+void Transform::setPosition(const glm::vec3 &pos) { position_ = pos; }
 
 /**
  * @brief Set the rotation
- * @param rot const glm::vec3& rotation
+ * @param rot const glm::quat& rotation
  */
-void Transform::setRotation(const glm::vec3 &rot) { rotation = rot; }
+void Transform::setRotation(const glm::quat &rot) { rotation_ = rot; }
 
 /**
  * @brief Set the scale
  * @param scl const glm::vec3& scale
  */
-void Transform::setScale(const glm::vec3 &scl) { scale = scl; }
+void Transform::setScale(const glm::vec3 &scl) { scale_ = scl; }
 
 /**
  * @brief Get the model matrix
@@ -36,15 +39,16 @@ glm::mat4 Transform::getModelMatrix() const {
   glm::mat4 model = glm::mat4(1.0f);
 
   // Translate the model matrix
-  model = glm::translate(model, position);
+  model = glm::translate(model, position_);
 
   // Rotate the model matrix
-  model = glm::rotate(model, rotation.x, glm::vec3(1, 0, 0));
-  model = glm::rotate(model, rotation.y, glm::vec3(0, 1, 0));
-  model = glm::rotate(model, rotation.z, glm::vec3(0, 0, 1));
+  glm::mat4 rotationMatrix = glm::mat4_cast(rotation_);
+
+  // Multiply the model matrix by the rotation matrix
+  model = model * rotationMatrix;
 
   // Scale the model matrix
-  model = glm::scale(model, scale);
+  model = glm::scale(model, scale_);
 
   // Return the model matrix
   return model;

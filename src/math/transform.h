@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 namespace math {
 
@@ -12,7 +13,7 @@ public:
   void setPosition(const glm::vec3 &pos);
 
   // Set the rotation
-  void setRotation(const glm::vec3 &rot);
+  void setRotation(const glm::quat &rot);
 
   // Set the scale
   void setScale(const glm::vec3 &scl);
@@ -21,14 +22,14 @@ public:
   glm::mat4 getModelMatrix() const;
 
 private:
-  // Position
-  glm::vec3 position;
+  // Position (vector)
+  glm::vec3 position_;
 
-  // Rotation
-  glm::vec3 rotation;
+  // Rotation (quaternion)
+  glm::quat rotation_;
 
-  // Scale
-  glm::vec3 scale;
+  // Scale (multiplicative vector)
+  glm::vec3 scale_;
 };
 
 } // namespace math

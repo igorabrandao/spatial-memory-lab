@@ -428,14 +428,14 @@ void Renderer::update() {
   // Process the keyboard input
   processInput(deltaTime);
 
-  // Set the rotation of the cube
-  // transform.setRotation({currentFrame * 0.5f, currentFrame, 0.0f});
-
   // Set the position of the cube
   transform_.setPosition({0.0f, 0.5f, 0.0f});
 
-  // Update the sensor system
+  // Polling the sensor system per frame
   sensorSystem_.update();
+
+  // Get the orientation from the sensor system and set the rotation of the cube
+  transform_.setRotation(sensorSystem_.getOrientation());
 }
 
 /**

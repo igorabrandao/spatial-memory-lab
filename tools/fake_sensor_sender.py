@@ -60,3 +60,4 @@ while True:
     if i % 1000 == 0:
         print(f"Data length: {len(data)}")
         print(f"Sent data to the socket {i} times")
+        print("--------------------------------")

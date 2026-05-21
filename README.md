@@ -4,6 +4,8 @@ A low-level experimental system for spatial computing, combining computer vision
 
 ## Demo
 
+![Spatial Memory Lab desktop app](assets/img/screenshot.png)
+
 **[Watch on YouTube](https://youtu.be/SNvDGKU2MGI)** — desktop app driven by live phone orientation (Phyphox → UDP bridge).
 
 ## 🚀 Overview

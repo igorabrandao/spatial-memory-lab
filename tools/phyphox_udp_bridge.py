@@ -48,9 +48,9 @@ while True:
         # Get the quaternion data, handling the empty buffer case
         try:
             quaternion_w = attitude["attW"]["buffer"][0]
-            quaternion_x = attitude["attX"]["buffer"][0]
-            quaternion_y = attitude["attY"]["buffer"][0]
-            quaternion_z = attitude["attZ"]["buffer"][0]
+            quaternion_x = attitude["attZ"]["buffer"][0]
+            quaternion_y = attitude["attX"]["buffer"][0]
+            quaternion_z = attitude["attY"]["buffer"][0]
         except (KeyError, IndexError):
             print("Received empty buffer from Phyphox.")
             time.sleep(0.1)

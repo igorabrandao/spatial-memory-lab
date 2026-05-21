@@ -1,3 +1,40 @@
+# 2026-05-21
+
+Problems:
+
+After integrating the cellphone sensors with the app interface using a python script, I've observed the following:
+
+- If I move the phone along the y-axis until the screen points to the ceiling, the cube rotates to the left.
+- Now, if I move the phone along the y-axis until the screen points to the floor, the cube rotates to the right.
+- If I turn the phone along the x-axis until the screen is to my left, the cube rolls to the right, and the opposite happens if I turn the screen to my right.
+- If I want the cube to turn vertically, I need to roll the phone.
+
+Hypothesis:
+
+- These behaviors suggest that the axis between the OpenGL and the device are permuted:
+  Android X -> OpenGL Z
+  Android Y -> OpenGL X
+  Android Z -> OpenGL Y
+
+Testing:
+
+- I've changed the quaternion mapping like this:
+
+```
+quaternion_w = attitude["attW"]["buffer"][0]
+quaternion_x = attitude["attZ"]["buffer"][0]
+quaternion_y = attitude["attX"]["buffer"][0]
+quaternion_z = attitude["attY"]["buffer"][0]
+```
+
+And with that I realized that the default face position of the cube is equivalent to the cell phone screen pointing at the ceiling (important).
+
+Starting from this position:
+
+- Now, if I roll the phone and the screen points to the left, the cube rotates to the left, the same thing to the right.
+- If I hold the phone horizontally and point the screen at me, the cube rolls to the left, and the opposite repeats.
+- But now I don't know how to rotate the cube vertically, haha.
+
 # 2026-05-14
 
 Problems:
